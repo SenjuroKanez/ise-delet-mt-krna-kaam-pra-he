@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-// Function to find the index of the first 1 using binary search
+//Binary search pehle 1 ko find kr rha he.(╹ڡ╹ )
 int binarySearch(int arr[], int left, int right, int target) {
     if (left > right) {
         return -1; 
@@ -10,7 +10,7 @@ int binarySearch(int arr[], int left, int right, int target) {
 
     int mid = left + (right - left) / 2;
 
-        if (arr[mid] == target && arr[mid-1] == 0 ){
+    if (arr[mid] == target && arr[mid-1] == 0 ){
         return mid; 
         
     } else if (target < arr[mid]) {
@@ -20,23 +20,25 @@ int binarySearch(int arr[], int left, int right, int target) {
     }
 }
 
+//Is function me array input or 1s count ho jaye ga (づ￣ 3￣)づ
+
 int main() {
-    int n;
+    int n, l;
     cout << "Enter the size of the array: ";
     cin >> n;
 
     if (n <= 0) {
-        cout << "Array size must be positive." << endl;
-        return 1;
+        throw std::invalid_argument("Array size must be positive.");
     }
 
     int arr[n];
     cout << "Enter " << n << " elements (0s and 1s only): " << endl;
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-        if (arr[i] != 0 && arr[i] != 1) {
+        cin >> l;
+        if (l != 0 && l != 1) {
             cout << "Invalid input. Please enter only 0s and 1s." << endl;
-            return 1;
+        }else{
+            arr[i] = l;
         }
     }
 
@@ -44,7 +46,9 @@ int main() {
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             if (arr[i] > arr[j]) {
-                swap(arr[i], arr[j]);
+                int a = arr[i];
+                arr[i] = arr[j];
+                arr[j] = a; 
             }
         }
     }
@@ -53,7 +57,7 @@ int main() {
     int otal = binarySearch(arr, 0, n - 1, target);
 
 
-    int total = n - otal; // Calculate the number of 1's
+    int total = n - otal; 
 
     cout << "Total number of 1s: " << total << endl;
 

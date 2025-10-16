@@ -26,6 +26,14 @@ int main() {
         }
     }
     
+    cout << "Matrix:\n";
+    for (int i = 0; i < cols; i++) {
+        for (int j = 0; j < rows; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+
     cout << "Transpose of the matrix:\n";
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
