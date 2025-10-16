@@ -12,7 +12,7 @@ int main() {
 
     int matrix1[rows][cols], matrix2[rows][cols], result[rows][cols];
 
-    // Input first matrix
+
     cout << "Enter elements of first matrix:\n";
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
@@ -20,7 +20,7 @@ int main() {
         }
     }
 
-    // Input second matrix
+
     cout << "Enter elements of second matrix:\n";
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
@@ -28,14 +28,14 @@ int main() {
         }
     }
 
-    // Subtract matrix2 from matrix1
+
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             result[i][j] = matrix1[i][j] - matrix2[i][j];
         }
     }
 
-    // Find max value using linear search in the result matrix
+
     int maxVal = result[0][0];
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
@@ -45,7 +45,7 @@ int main() {
         }
     }
 
-    // Display the resultant matrix
+
     cout << "Resultant matrix after subtraction:\n";
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
