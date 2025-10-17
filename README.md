@@ -1,8 +1,8 @@
 # 🇵🇰 3rd Semester ka Code Dump 🚀  
 > *"Delete mat karna, kaam par hai — future ka Google Engineer ban raha hai."*  
 
-![Code Vibes]
-<iframe src="https://assets.pinterest.com/ext/embed.html?id=58335757667640613" height="485" width="600" frameborder="0" scrolling="no" ></iframe>
+![Code Vibes](https://assets.pinterest.com/ext/embed.html?id=58335757667640613)
+
 ---
 
 ## 📁 Folder Structure
