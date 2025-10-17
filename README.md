@@ -1,7 +1,7 @@
 # 🇵🇰 3rd Semester ka Code Dump 🚀  
 > *"Delete mat karna, kaam par hai — future ka Google Engineer ban raha hai."*  
 
-![Code Vibes](https://assets.pinterest.com/ext/embed.html?id=58335757667640613)
+![Code Vibes]([https://assets.pinterest.com/ext/embed.html?id=58335757667640613](https://pin.it/5ofwRbDyS))
 
 ---
 
