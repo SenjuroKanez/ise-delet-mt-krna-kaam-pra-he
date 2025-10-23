@@ -21,7 +21,7 @@ If no swaps occur in a pass, the array is already sorted — easy exit 🏁
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`  
 
-```
+
 
 Initial: [5, 2, 8, 1]
 
@@ -30,7 +30,7 @@ Initial: [5, 2, 8, 1]
 #### 🌀 PASS 1  
 Compare pairs → Swap if left > right  
 ```
-
+```
 [5, 2, 8, 1]
 ↑  ↑
 Swap → [2, 5, 8, 1]
@@ -42,13 +42,13 @@ No swap → [2, 5, 8, 1]
 [2, 5, 8, 1]
 ↑  ↑
 Swap → [2, 5, 1, 8]
-
+```
 ```
 **Result after Pass 1:** `[2, 5, 1, 8]` 🫧  
 
 #### 🔁 PASS 2  
 ```
-
+```
 [2, 5, 1, 8]
 ↑  ↑
 No swap
@@ -56,17 +56,19 @@ No swap
 [2, 5, 1, 8]
 ↑  ↑
 Swap → [2, 1, 5, 8]
-
+```
 ```
 **Result after Pass 2:** `[2, 1, 5, 8]`
 
 #### 🔁 PASS 3  
+```
 ```
 
 [2, 1, 5, 8]
 ↑  ↑
 Swap → [1, 2, 5, 8]
 
+```
 ```
 🎉 **Sorted!** `[1, 2, 5, 8]`
 
@@ -84,7 +86,7 @@ Rinse & repeat until sorted 🧼
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`  
 
-```
+
 
 PASS 1:
 [5, 2, 8, 1]
@@ -101,7 +103,7 @@ PASS 3:
 ^  ^
 Find min (5) → swap with 8 → [1, 2, 5, 8]
 
-```
+
 
 🎉 **Sorted:** `[1, 2, 5, 8]`
 
@@ -119,7 +121,7 @@ Like sorting cards in your hand 🃏
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`
 
-```
+
 
 Start: [5 | 2, 8, 1]
 
@@ -132,7 +134,7 @@ shift 5 → [2, 5, 5, 8]
 shift 2 → [2, 2, 5, 8]
 place 1 → [1, 2, 5, 8]
 
-```
+
 
 🎉 **Sorted:** `[1, 2, 5, 8]`
 
@@ -150,8 +152,6 @@ then merge them back in order. 🧩
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`
 
-```
-
 Split: [5, 2, 8, 1]
 → [5, 2] + [8, 1]
 → [5] [2] [8] [1]
@@ -165,7 +165,7 @@ Compare 2 vs 1 → [1]
 Compare 2 vs 8 → [1, 2]
 Compare 5 vs 8 → [1, 2, 5, 8]
 
-```
+
 
 🎉 **Sorted:** `[1, 2, 5, 8]`
 
@@ -182,7 +182,7 @@ Pick a pivot → send smaller ones left, bigger ones right → repeat recursivel
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`
 
-```
+
 
 Pivot = 5
 Partition → [2, 1] | 5 | [8]
@@ -195,7 +195,7 @@ Right [8] → sorted
 
 Combine → [1, 2] + [5] + [8]
 
-```
+
 
 🎉 **Sorted:** `[1, 2, 5, 8]`
 
@@ -222,7 +222,7 @@ Even life is just about comparing your priorities and swapping what’s wrong �
 ---
 
 ✨ *Made with caffeine, chaos, and clean code.*  
-```
+
 
 ---
 
@@ -252,14 +252,14 @@ If no swaps in a pass → stop early! (Sorted already, genius 😎)
 
 ### 🎯 Dry Run — `[5, 2, 8, 1]`
 
-```
+
 
 Initial → [5, 2, 8, 1]
 
-```
+
 
 #### 🌀 PASS 1
-```
+
 
 [5, 2, 8, 1]
 ↑  ↑
@@ -273,11 +273,11 @@ Initial → [5, 2, 8, 1]
 ↑  ↑
 💥 8 > 1 → swap → [2, 5, 1, 8]
 
-```
+
 ✅ End of Pass 1 → [2, 5, 1, 8]
 
 #### 🔁 PASS 2
-```
+
 
 [2, 5, 1, 8]
 ↑  ↑
@@ -287,17 +287,17 @@ Initial → [5, 2, 8, 1]
 ↑  ↑
 💥 5 > 1 → swap → [2, 1, 5, 8]
 
-```
+
 ✅ End of Pass 2 → [2, 1, 5, 8]
 
 #### 🔁 PASS 3
-```
+
 
 [2, 1, 5, 8]
 ↑  ↑
 💥 2 > 1 → swap → [1, 2, 5, 8]
 
-```
+
 🎉 **Sorted!** `[1, 2, 5, 8]`
 
 🧠 *O(n²)* | *Stable ✅* | *Space O(1)*  
@@ -313,7 +313,7 @@ Methodical, a bit slow… but determined 🦥
 ---
 
 ### 🎯 Dry Run — `[5, 2, 8, 1]`
-```
+
 
 PASS 1:
 [5, 2, 8, 1]
@@ -331,7 +331,7 @@ PASS 3:
 ^  ^
 🔎 min = 5 → swap → [1, 2, 5, 8]
 
-```
+
 🎉 **Sorted!** `[1, 2, 5, 8]`  
 🧠 *O(n²)* | *Not Stable ❌* | *Space O(1)*  
 
@@ -346,7 +346,7 @@ like politely fitting into a queue 🤵
 ---
 
 ### 🎯 Dry Run — `[5, 2, 8, 1]`
-```
+
 
 Start: [5 | 2, 8, 1]
 Insert 2 → shift 5 ⏩ → [2, 5 | 8, 1]
@@ -359,7 +359,7 @@ shift 5 ⏩ [2, 5, 5, 8]
 shift 2 ⏩ [2, 2, 5, 8]
 place 1 → [1, 2, 5, 8]
 
-```
+
 🎉 **Sorted!** `[1, 2, 5, 8]`  
 🧠 *O(n²)* | *Stable ✅* | *Space O(1)*  
 
@@ -375,7 +375,7 @@ Recursive and chill 🧘‍♂️
 
 ### 🎯 Dry Run — `[5, 2, 8, 1]`
 
-```
+
 
 Split 🔪
 [5, 2, 8, 1]
@@ -392,7 +392,7 @@ Final Merge 🧩
 → Compare 2 vs 8 → [1, 2]
 → Compare 5 vs 8 → [1, 2, 5, 8]
 
-```
+
 
 🎉 **Sorted!** `[1, 2, 5, 8]`  
 🧠 *O(n log n)* | *Stable ✅* | *Space O(n)*  
@@ -408,7 +408,7 @@ Efficient and dramatic 💅
 ---
 
 ### 🎯 Dry Run — `[5, 2, 8, 1]`
-```
+
 
 Pivot = 5 🎯
 Partition:
@@ -421,7 +421,7 @@ Pivot = 2
 Combine everything 💥
 [1, 2] + [5] + [8] → [1, 2, 5, 8]
 
-```
+
 🎉 **Sorted!** `[1, 2, 5, 8]`  
 🧠 *O(n log n)* avg | *Not Stable ❌* | *Space O(log n)*  
 
