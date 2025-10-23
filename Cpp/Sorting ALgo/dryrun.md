@@ -77,6 +77,7 @@ Swap → [1, 2, 5, 8]
 
 ```
 ```
+```
 🎉 **Sorted!** `[1, 2, 5, 8]`
 
 🧠 *Time: O(n²)* | *Space: O(1)* | *Stable: Yes*
@@ -111,6 +112,8 @@ PASS 3:
 ^  ^
 Find min (5) → swap with 8 → [1, 2, 5, 8]
 
+
+
 ```
 
 ```
@@ -130,6 +133,8 @@ Like sorting cards in your hand 🃏
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`
 
+
+
 ```
 
 ```
@@ -143,6 +148,8 @@ Insert 1 → shift 8 → [2, 5, 8, 8]
 shift 5 → [2, 5, 5, 8]
 shift 2 → [2, 2, 5, 8]
 place 1 → [1, 2, 5, 8]
+
+
 
 ```
 
@@ -179,6 +186,8 @@ Compare 2 vs 1 → [1]
 Compare 2 vs 8 → [1, 2]
 Compare 5 vs 8 → [1, 2, 5, 8]
 
+
+
 ```
 
 ```
@@ -197,6 +206,8 @@ Pick a pivot → send smaller ones left, bigger ones right → repeat recursivel
 
 ### 🎯 Dry Run — Array `[5, 2, 8, 1]`
 
+
+
 ```
 
 ```
@@ -210,6 +221,8 @@ Pivot = 2 → [1] | 2 | []
 Right [8] → sorted
 
 Combine → [1, 2] + [5] + [8]
+
+
 
 ```
 
@@ -239,7 +252,7 @@ Even life is just about comparing your priorities and swapping what’s wrong �
 ---
 
 ✨ *Made with caffeine, chaos, and clean code.*  
-```
+
 
 ---
 
@@ -269,10 +282,14 @@ If no swaps in a pass → stop early! (Sorted already, genius 😎)
 
 ### 🎯 Dry Run — `[5, 2, 8, 1]`
 
+
+
 ```
 
 ```
 Initial → [5, 2, 8, 1]
+
+
 
 ```
 
@@ -420,6 +437,8 @@ Final Merge 🧩
 → Compare 2 vs 1 → [1]
 → Compare 2 vs 8 → [1, 2]
 → Compare 5 vs 8 → [1, 2, 5, 8]
+
+
 
 ```
 
