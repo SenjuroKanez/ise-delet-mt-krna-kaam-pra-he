@@ -25,7 +25,7 @@ If no swaps occur in a pass, the array is already sorted — easy exit 🏁
 
 Initial: [5, 2, 8, 1]
 
-```
+
 
 #### 🌀 PASS 1  
 Compare pairs → Swap if left > right  
