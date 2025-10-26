@@ -1,4 +1,5 @@
 ```markdown
+```
 # 🌈 Sorting Algorithms Visual Guide  
 > *"Turning chaos into order, one swap at a time."*  
 
@@ -7,7 +8,7 @@ This is your **visual & fun journey** through the world of sorting algorithms �
 each one fighting to bring peace to your list 🕊️  
 
 ---
-```
+
 
 
 ## 🫧 Bubble Sort — *“The Fizzy One”*  
@@ -348,6 +349,9 @@ Step4: place 8 → [1, 2, 5, 8]
 **Concept:**  
 Pick a pivot → send smaller ones left, bigger ones right → repeat recursively 🌀  
 
+---
+---
+---
 ---
 # 🎯 QuickSort — *"The Pivot Party"*  
 **Concept:**  
