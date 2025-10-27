@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="card-step1">
+            <h2>Step 1: Basic Info</h2>
+            <input type="text" id="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" placeholder="Last Name" required>
+            <button onclick="nextStep(2)">Next</button>
+        </div>
+
+        <div class="card hidden" id="card-step2">
+            <h2>Step 2: Contact Info</h2>
+            <select id="gender" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <input type="email" id="email" placeholder="Email" required>
+            <button onclick="prevStep(1)">Back</button>
+            <button onclick="nextStep(3)">Next</button>
+        </div>
+
+        <div class="card hidden" id="card-step3">
+            <h2>Step 3: Security</h2>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="number" id="number" placeholder="Phone Number" required>
+            <button onclick="prevStep(2)">Back</button>
+            <button onclick="submitForm()">Register</button>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function nextStep(step) {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('card-step' + step).classList.remove('hidden');
+        }
+        function prevStep(step) {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById('card-step' + step).classList.remove('hidden');
+        }
+        function submitForm() {
+            const data = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                gender: document.getElementById('gender').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                number: document.getElementById('number').value
+            };
+            fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.text())
+            .then(msg => {
+                document.getElementById('message').innerHTML = msg;
+                document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            });
+        }
+    </script>
+</body>
+</html>

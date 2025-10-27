@@ -1,0 +1,137 @@
+/* 🧠 Palette */
+:root {
+  --deep-teal: #223030;
+  --mocha: #523D35;
+  --sage: #959D90;
+  --sand: #BBA58F;
+  --cream: #E8D9CD;
+  --offwhite: #EFEFE9;
+}
+
+/* 🌌 Base layout */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, var(--deep-teal), var(--mocha));
+  color: var(--deep-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* 🎁 Card container */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 🪄 Card design */
+.card {
+  background: var(--offwhite);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  transition: all 0.6s ease-in-out;
+  opacity: 1;
+}
+
+.card.hidden {
+  opacity: 0;
+  transform: translateY(50px);
+  pointer-events: none;
+}
+
+/* ✨ Headings */
+h2 {
+  text-align: center;
+  color: var(--mocha);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+/* 🧾 Inputs & Selects */
+input,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.2rem;
+  border: 2px solid var(--sand);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: var(--cream);
+  color: var(--deep-teal);
+  outline: none;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--sage);
+  background: var(--offwhite);
+  box-shadow: 0 0 6px var(--sage);
+}
+
+/* 🎮 Buttons */
+button {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  background: var(--deep-teal);
+  color: var(--offwhite);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background: var(--mocha);
+  transform: scale(1.03);
+}
+
+/* 🌈 Message display */
+#message {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--offwhite);
+  font-size: 1.2rem;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* ✨ Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 💫 Smooth card transitions */
+.card:not(.hidden) {
+  animation: cardFadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
