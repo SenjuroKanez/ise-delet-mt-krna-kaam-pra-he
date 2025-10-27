@@ -43,12 +43,12 @@ Compare pairs → Swap if left > right
  Swap → [2, 5, 8, 1]
 
 [2, 5, 8, 1]
- ↑  ↑
- No swap → [2, 5, 8, 1]
+    ↑  ↑
+    No swap → [2, 5, 8, 1]
 
 [2, 5, 8, 1]
- ↑  ↑
- Swap → [2, 5, 1, 8]
+       ↑  ↑
+       Swap → [2, 5, 1, 8]
 
 ```
 
