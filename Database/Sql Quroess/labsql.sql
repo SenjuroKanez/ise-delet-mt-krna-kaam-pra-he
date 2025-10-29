@@ -22,50 +22,21 @@ SELECT * FROM library_inventory;
 
 
 
--- =============================================
--- Database: AdventureWorks (or any name you prefer)
--- Table  : SpecialOffer
--- =============================================
 
--- Create the database (optional – remove if DB already exists)
-CREATE DATABASE IF NOT EXISTS AdventureWorks;
-USE AdventureWorks;
+---
+---
 
--- Drop the table if it already exists (for idempotent scripts)
-DROP TABLE IF EXISTS SpecialOffer;
-
--- Create the SpecialOffer table
 CREATE TABLE SpecialOffer (
-    Special_Offer_ID INT            NOT NULL,
-    ETL_Source       VARCHAR(50)    NOT NULL,
-    Offer_Name       VARCHAR(100)   NOT NULL,
-    DiscountPct      DECIMAL(4,2)   NOT NULL DEFAULT 0.00,
-    Type             VARCHAR(50)    NOT NULL,
-    Category         VARCHAR(50)    NOT NULL,
-
-    -- Primary key
-    CONSTRAINT PK_SpecialOffer PRIMARY KEY (Special_Offer_ID),
-
-    -- Optional: useful check constraints
-    CONSTRAINT CHK_DiscountPct_Range 
-        CHECK (DiscountPct >= 0.00 AND DiscountPct <= 1.00),
-
-    CONSTRAINT CHK_Type_Valid 
-        CHECK (Type IN (
-            'No Discount',
-            'Volume Discount',
-            'Discontinued Product',
-            'Seasonal Discount',
-            'Excess Inventory'
-        )),
-
-    CONSTRAINT CHK_Category_Valid 
-        CHECK (Category IN ('No Discount','Reseller','Customer'))
+    Special_Offer_ID INT NOT NULL PRIMARY KEY,
+    ETL_Source       VARCHAR(50)  NOT NULL,
+    Offer_Name       VARCHAR(100) NOT NULL,
+    DiscountPct      DECIMAL(4,2) NOT NULL DEFAULT 0.00,
+    Type             VARCHAR(50)  NOT NULL,
+    Category         VARCHAR(50)  NOT NULL
 );
 
--- =============================================
--- Optional: Insert the sample data shown in the image
--- =============================================
+
+
 INSERT INTO SpecialOffer (Special_Offer_ID, ETL_Source, Offer_Name, DiscountPct, Type, Category) VALUES
 (1, 'ADVENTURE', 'No Discount',                0.00, 'No Discount',          'No Discount'),
 (2, 'ADVENTURE', 'Volume Discount 11 to 14',   0.02, 'Volume Discount',      'Reseller'),
@@ -78,7 +49,5 @@ INSERT INTO SpecialOffer (Special_Offer_ID, ETL_Source, Offer_Name, DiscountPct,
 (9, 'ADVENTURE', 'Road-650 Overstock',         0.30, 'Excess Inventory',    'Reseller'),
 (10,'ADVENTURE', 'Mountain Tire Sale',          0.50, 'Excess Inventory',    'Customer');
 
--- =============================================
--- Verify the data
--- =============================================
+
 SELECT * FROM SpecialOffer ORDER BY Special_Offer_ID;
