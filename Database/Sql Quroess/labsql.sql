@@ -21,14 +21,6 @@ SELECT * FROM library_inventory;
 
 
 
-<<<<<<< HEAD
-=======
-
-
----
----
-
->>>>>>> 7e1e1e68699a4a8082a561e1ff6f92d76365f6b9
 CREATE TABLE SpecialOffer (
     Special_Offer_ID INT NOT NULL PRIMARY KEY,
     ETL_Source       VARCHAR(50)  NOT NULL,
