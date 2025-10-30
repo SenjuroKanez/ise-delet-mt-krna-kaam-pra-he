@@ -28,7 +28,8 @@ def bubble_sort_visual(arr):
             clear()
             print(Fore.MAGENTA + f"Pass {i+1}, Comparing index {j} & {j+1}" + Style.RESET_ALL)
             print_array(arr, j, j + 1)
-            time.sleep(0.4)
+            print(Fore.WHITE + "\nPress Enter to continue..." + Style.RESET_ALL)
+            input()
 
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
@@ -37,7 +38,8 @@ def bubble_sort_visual(arr):
                 clear()
                 print(Fore.GREEN + f"Swapped {arr[j]} and {arr[j+1]}" + Style.RESET_ALL)
                 print_array(arr, j, j + 1)
-                time.sleep(0.5)
+                print(Fore.WHITE + "\nPress Enter to continue..." + Style.RESET_ALL)
+                input()
 
         if not swapped:
             break
