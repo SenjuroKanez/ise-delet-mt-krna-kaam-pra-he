@@ -1,4 +1,5 @@
 ```markdown
+```
 # 🌈 Sorting Algorithms Visual Guide  
 > *"Turning chaos into order, one swap at a time."*  
 
@@ -7,7 +8,7 @@ This is your **visual & fun journey** through the world of sorting algorithms �
 each one fighting to bring peace to your list 🕊️  
 
 ---
-```
+
 
 
 ## 🫧 Bubble Sort — *“The Fizzy One”*  
@@ -42,12 +43,12 @@ Compare pairs → Swap if left > right
  Swap → [2, 5, 8, 1]
 
 [2, 5, 8, 1]
- ↑  ↑
- No swap → [2, 5, 8, 1]
+    ↑  ↑
+    No swap → [2, 5, 8, 1]
 
 [2, 5, 8, 1]
- ↑  ↑
- Swap → [2, 5, 1, 8]
+       ↑  ↑
+       Swap → [2, 5, 1, 8]
 
 ```
 
@@ -60,12 +61,12 @@ Compare pairs → Swap if left > right
 
 ```
 [2, 5, 1, 8]
-↑  ↑
+ ↑  ↑
 No swap
 
 [2, 5, 1, 8]
-↑  ↑
-Swap → [2, 1, 5, 8]
+    ↑  ↑
+    Swap → [2, 1, 5, 8]
 ```
 
 
@@ -77,8 +78,8 @@ Swap → [2, 1, 5, 8]
 ```
 
 [2, 1, 5, 8]
-↑  ↑
-Swap → [1, 2, 5, 8]
+ ↑  ↑
+ Swap → [1, 2, 5, 8]
 
 ```
 
@@ -348,6 +349,9 @@ Step4: place 8 → [1, 2, 5, 8]
 **Concept:**  
 Pick a pivot → send smaller ones left, bigger ones right → repeat recursively 🌀  
 
+---
+---
+---
 ---
 # 🎯 QuickSort — *"The Pivot Party"*  
 **Concept:**  

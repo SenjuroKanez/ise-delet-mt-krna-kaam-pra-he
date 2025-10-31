@@ -59,7 +59,8 @@ GPA > 3.0 (Inshallah 🤲)
 
 😎 Author
 
-@lulguy
+@alternateadmi
+@SenjuroKanez
 
 3rd semester student. Running on chai, WiFi drops, and compiler errors.
 
