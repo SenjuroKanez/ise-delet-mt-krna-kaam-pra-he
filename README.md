@@ -9,7 +9,8 @@
 
 📦 ise-delet-mt-krna-kaam-pra-he
 ├── 🐍 python/ → AI, ML aur “thoda code likha, zyada import kiya”
-└── 💻 cpp/ → DSA, Logic aur recursive nightmares
+├── 💻 cpp/ → DSA, Logic aur recursive nightmares
+└── ♟ Database/ → DB, Data or full Stacking ki tayiari
 
 
 ---
@@ -31,6 +32,7 @@ A mix of *sleep deprivation*, *instant noodles*, and *endless debugging* 💀
 |-----------|------|--------|
 | 🐍 Python | Chill | For AI, ML, DL aur assignments copy karne ke liye |
 | 💻 C++    | Serious | For DSA, logic, and segfault adventures |
+| 🎗  Database    | Smooth | For DBS, Data/TAbles, and Staking full |
 
 ---
 
@@ -44,6 +46,8 @@ Open folder according to your mental stability:
 🐍 python/ → if you trust imports more than logic
 
 💻 cpp/ → if you like pain, recursion, and seg faults
+
+♟ Database/ → if you want some succesfull forums and data collection.
 
 Run. Cry. Debug. Repeat.
 
