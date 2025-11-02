@@ -8,9 +8,9 @@
 ## 📁 Folder Structure
 
 📦 ise-delet-mt-krna-kaam-pra-he
-├── 🐍 python/ → AI, ML aur “thoda code likha, zyada import kiya”
-├── 💻 cpp/ → DSA, Logic aur recursive nightmares
-└── ♟ Database/ → DB, Data or full Stacking ki tayiari
+├── 🐍 python/ -> AI, ML aur "thoda code likha, zyada import kiya"
+├── 💻 cpp/ -> DSA, Logic aur recursive nightmares
+└── ♟ Database/ -> DB, Data aur full Stacking ki tayari
 
 
 ---
