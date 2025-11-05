@@ -176,3 +176,6 @@
 
 print(9 / 2)
 print(9 // 2)
+
+x = int (input("enter a age:"))
+print (" ypu wll be 30 in ", x - 30 ,"years")
