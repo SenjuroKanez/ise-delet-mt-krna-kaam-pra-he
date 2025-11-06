@@ -47,7 +47,8 @@ def bubble_sort_visual(arr):
     clear()
     print(Fore.CYAN + "✨ Sorted Array ✨" + Style.RESET_ALL)
     print_array(arr)
-    time.sleep(1.5)
+    print(Fore.WHITE + "\nPress Enter to finish..." + Style.RESET_ALL)
+    input()
 
 if __name__ == "__main__":
     data = [23, 12, 18, 44, 6, 27, 9]
