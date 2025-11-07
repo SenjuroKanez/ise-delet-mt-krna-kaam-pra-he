@@ -8,21 +8,26 @@ struct Node {
 };
 
 void CreateDoublyLinkedList(Node** head, int n) {
-    Node* temp;
-    Node* p;
-    *head = new Node();
-    (*head)->data = 1;
-    (*head)->next = nullptr;
-    (*head)->prev = nullptr;
-    p = *head;
+    if (n <= 0) return;
+    Node* tail = *head; 
 
-    for (int i = 2; i <= n; i++) {
-        temp = new Node();
-        temp->data = i;
+    if (tail == nullptr) {
+        Node* temp = new Node();
+        cout << "Insert node 1 with data: " << endl;
+        cin >> temp->data;
+        temp->prev = nullptr;
         temp->next = nullptr;
-        temp->prev = p;
-        p->next = temp;
-        p = p->next;
+        *head = temp;
+        tail = temp;
+    }
+    for (int i = (*head ? 2 : 1); i <= n; ++i) {
+        Node* temp = new Node();
+        cout << "Insert node " << i << " with data: " << endl;
+        cin >> temp->data;
+        temp->next = nullptr;
+        temp->prev = tail;
+        if (tail) tail->next = temp;
+        tail = temp;
     }
 }
 void DisplayDoublyLinkedList(Node* head) {
@@ -101,7 +106,7 @@ void InsertAtPosition(Node** head, int position, int new_data) {
 int main(){
     Node* head = nullptr;
     int n = 5;
-    
+
     CreateDoublyLinkedList(&head, n);
     cout << "Doubly Linked List after creation: ";
     DisplayDoublyLinkedList(head);
