@@ -20,6 +20,7 @@ void CreateDoublyLinkedList(Node** head, int n) {
         *head = temp;
         tail = temp;
     }
+
     for (int i = (*head ? 2 : 1); i <= n; ++i) {
         Node* temp = new Node();
         cout << "Insert node " << i << " with data: " << endl;
@@ -30,6 +31,7 @@ void CreateDoublyLinkedList(Node** head, int n) {
         tail = temp;
     }
 }
+
 void DisplayDoublyLinkedList(Node* head) {
     Node* p = head;
     while (p != nullptr) {
@@ -37,6 +39,24 @@ void DisplayDoublyLinkedList(Node* head) {
         p = p->next;
     }
     cout << endl;
+}
+
+void DeleteNodeAtEnd(Node** head) {
+    if (*head == nullptr) return;
+
+    Node* temp = *head;
+
+    while (temp->next != nullptr) {
+        temp = temp->next;
+    }
+
+    if (temp->prev != nullptr) {
+        temp->prev->next = nullptr;
+    } else {
+        *head = nullptr;
+    }
+
+    delete temp;
 }
 
 void DeleteNodeAtPosition(Node** head, int position) {
@@ -68,6 +88,27 @@ void DeleteNodeAtPosition(Node** head, int position) {
 
     delete temp;
 }
+
+void InsertAtend(Node** head, int new_data) {
+    Node* new_node = new Node();
+    new_node->data = new_data;
+    new_node->next = nullptr;
+
+    if (*head == nullptr) {
+        new_node->prev = nullptr;
+        *head = new_node;
+        return;
+    }
+
+    Node* temp = *head;
+    while (temp->next != nullptr) {
+        temp = temp->next;
+    }
+
+    temp->next = new_node;
+    new_node->prev = temp;
+}
+
 void InsertAtPosition(Node** head, int position, int new_data) {
     if (position < 1) return;
 
@@ -103,21 +144,120 @@ void InsertAtPosition(Node** head, int position, int new_data) {
     temp->next = new_node;
 }
 
-int main(){
+int Searchfirstoccurrence(Node* head, int key) {
+    Node* temp = head;
+    int position = 1;
+    while (temp != nullptr) {
+        if (temp->data == key) {
+            cout << "Element found at position: " << position << endl;
+            return position;
+        }
+        temp = temp->next;
+        position++;
+    }
+    cout << "Element not found" << endl;
+    return -1;
+}
+
+void reverseList(Node*& head) {
+    if (!head || !head->next) return;
+
+    Node* current = head;
+    Node* temp = nullptr;
+
+    while (current != nullptr) {
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev;
+    }
+
+    if (temp != nullptr) {
+        head = temp->prev;
+    }
+}
+
+int main() {
     Node* head = nullptr;
-    int n = 5;
+    int choice;
 
-    CreateDoublyLinkedList(&head, n);
-    cout << "Doubly Linked List after creation: ";
-    DisplayDoublyLinkedList(head);
+    cout << "Doubly Linked List Operations Menu:" << endl;
+    cout << "1. Create Doubly Linked List" << endl;
+    cout << "2. Display Doubly Linked List" << endl;
+    cout << "3. Insert Node at Position" << endl;
+    cout << "4. Delete Node at Position" << endl;
+    cout << "5. Insert at end" << endl;
+    cout << "6. Delete at end" << endl;
+    cout << "7. Search first occurrence" << endl;
+    cout << "8. Reverse List" << endl;
 
-    InsertAtPosition(&head, 3, 10);
-    cout << "Doubly Linked List after inserting 10 at position 3: ";
-    DisplayDoublyLinkedList(head);
+    cout << "Enter your choice: ";
+    cin >> choice;
 
-    DeleteNodeAtPosition(&head, 2);
-    cout << "Doubly Linked List after deleting node at position 2: ";
-    DisplayDoublyLinkedList(head);
+    switch (choice) {
+        case 1: {
+            cout << "To Create Doubly Linked List input its size: ";
+            int n;
+            cin >> n;
+            CreateDoublyLinkedList(&head, n);
+            break;
+        }
+        case 2: {
+            cout << "Display Doubly Linked List:" << endl;
+            DisplayDoublyLinkedList(head);
+            break;
+        }
+        case 3: {
+            cout << "To Insert Node at Position \nEnter Position: ";
+            int n;
+            cin >> n;
+            cout << "Enter Value: ";
+            int val;
+            cin >> val;
+            InsertAtPosition(&head, n, val);
+            break;
+        }
+        case 4: {
+            cout << "To Delete Node at Position \nEnter Position: ";
+            int n;
+            cin >> n;
+            DeleteNodeAtPosition(&head, n);
+            break;
+        }
+        case 5: {
+            cout << "Insert at end\nEnter Value: ";
+            int val;
+            cin >> val;
+            InsertAtend(&head, val);
+            break;
+        }
+        case 6: {
+            cout << "Delete at end" << endl;
+            DeleteNodeAtEnd(&head);
+            break;
+        }
+        case 7: {
+            cout << "Search first occurrence \nEnter Value: ";
+            int key;
+            cin >> key;
+            int pos = Searchfirstoccurrence(head, key);
+            if (pos == -1)
+                cout << "found: false" << endl;
+            else
+                cout << "found: true at index " << pos << endl;
+            break;
+        }
+        case 8: {
+            cout << "Original List: ";
+            DisplayDoublyLinkedList(head);
+            reverseList(head);
+            cout << "Reversed List: ";
+            DisplayDoublyLinkedList(head);
+            break;
+        }
+        default:
+            cout << "Invalid Choice" << endl;
+    }
 
     return 0;
 }
