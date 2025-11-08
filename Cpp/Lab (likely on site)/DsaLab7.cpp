@@ -9,11 +9,11 @@ struct Node {
 
 void CreateDoublyLinkedList(Node** head, int n) {
     if (n <= 0) return;
-    Node* tail = *head; 
+    Node* tail = *head;
 
     if (tail == nullptr) {
         Node* temp = new Node();
-        cout << "Insert node 1 with data: " << endl;
+        cout << "Insert node 1 with data: ";
         cin >> temp->data;
         temp->prev = nullptr;
         temp->next = nullptr;
@@ -23,7 +23,7 @@ void CreateDoublyLinkedList(Node** head, int n) {
 
     for (int i = (*head ? 2 : 1); i <= n; ++i) {
         Node* temp = new Node();
-        cout << "Insert node " << i << " with data: " << endl;
+        cout << "Insert node " << i << " with data: ";
         cin >> temp->data;
         temp->next = nullptr;
         temp->prev = tail;
@@ -177,101 +177,107 @@ void reverseList(Node*& head) {
     }
 }
 
+void douballlinkmen() {
+    cout << "\nDoubly Linked List Operations Menu:\n";
+    cout << "1. Create Doubly Linked List\n";
+    cout << "2. Display Doubly Linked List\n";
+    cout << "3. Insert Node at Position\n";
+    cout << "4. Delete Node at Position\n";
+    cout << "5. Insert at start\n";
+    cout << "6. Insert at end\n";
+    cout << "7. Delete at start\n";
+    cout << "8. Delete at end\n";
+    cout << "9. Search first occurrence\n";
+    cout << "10. Reverse List\n";
+    cout << "11. Exit\n";
+}
+
 int main() {
     Node* head = nullptr;
     int choice;
+    bool x = true;
 
-    cout << "Doubly Linked List Operations Menu:" << endl;
-    cout << "1. Create Doubly Linked List" << endl;
-    cout << "2. Display Doubly Linked List" << endl;
-    cout << "3. Insert Node at Position" << endl;
-    cout << "4. Delete Node at Position" << endl;
-    cout << "5. Insert at start" << endl;
-    cout << "6. Insert at end" << endl;
-    cout << "7. Delete at start" << endl;
-    cout << "8. Delete at end" << endl;
-    cout << "9. Search first occurrence" << endl;
-    cout << "10. Reverse List" << endl;
+    while (x) {
+        douballlinkmen();
+        cout << "\nEnter your choice: ";
+        cin >> choice;
 
-    cout << "Enter your choice: ";
-    cin >> choice;
-
-    switch (choice) {
-        case 1: {
-            cout << "To Create Doubly Linked List input its size: ";
-            int n;
-            cin >> n;
-            CreateDoublyLinkedList(&head, n);
-            break;
+        switch (choice) {
+            case 1: {
+                cout << "Enter size of list: ";
+                int n;
+                cin >> n;
+                CreateDoublyLinkedList(&head, n);
+                break;
+            }
+            case 2: {
+                cout << "Doubly Linked List: ";
+                DisplayDoublyLinkedList(head);
+                break;
+            }
+            case 3: {
+                cout << "Enter position: ";
+                int pos, val;
+                cin >> pos;
+                cout << "Enter value: ";
+                cin >> val;
+                InsertAtPosition(&head, pos, val);
+                break;
+            }
+            case 4: {
+                cout << "Enter position to delete: ";
+                int pos;
+                cin >> pos;
+                DeleteNodeAtPosition(&head, pos);
+                break;
+            }
+            case 5: {
+                cout << "Enter value to insert at start: ";
+                int val;
+                cin >> val;
+                InsertAtPosition(&head, 1, val);
+                break;
+            }
+            case 6: {
+                cout << "Enter value to insert at end: ";
+                int val;
+                cin >> val;
+                InsertAtend(&head, val);
+                break;
+            }
+            case 7: {
+                DeleteNodeAtPosition(&head, 1);
+                cout << "Deleted node at start.\n";
+                break;
+            }
+            case 8: {
+                DeleteNodeAtEnd(&head);
+                cout << "Deleted node at end.\n";
+                break;
+            }
+            case 9: {
+                cout << "Enter value to search: ";
+                int key;
+                cin >> key;
+                Searchfirstoccurrence(head, key);
+                break;
+            }
+            case 10: {
+                cout << "Original List: ";
+                DisplayDoublyLinkedList(head);
+                reverseList(head);
+                cout << "Reversed List: ";
+                DisplayDoublyLinkedList(head);
+                break;
+            }
+            case 11: {
+                x = false;
+                cout << "Exiting program...\n";
+                break;
+            }
+            default:
+                cout << "Invalid choice, try again.\n";
         }
-        case 2: {
-            cout << "Display Doubly Linked List:" << endl;
-            DisplayDoublyLinkedList(head);
-            break;
-        }
-        case 3: {
-            cout << "To Insert Node at Position \nEnter Position: ";
-            int n;
-            cin >> n;
-            cout << "Enter Value: ";
-            int val;
-            cin >> val;
-            InsertAtPosition(&head, n, val);
-            break;
-        }
-        case 4: {
-            cout << "To Delete Node at Position \nEnter Position: ";
-            int n;
-            cin >> n;
-            DeleteNodeAtPosition(&head, n);
-            break;
-        }
-        case 5: {
-            cout << "Insert Node at Start" << endl;
-            cout << "Enter Value: ";
-            int val;
-            cin >> val;
-            InsertAtPosition(&head, 1, val);
-            break;
-        }
-        case 6: {
-            cout << "Insert at end\nEnter Value: ";
-            int val;
-            cin >> val;
-            InsertAtend(&head, val);
-            break;
-        }
-        case 7: {
-            cout << "Delete Node at start" << endl;
-            DeleteNodeAtPosition(&head, 1);
-            break;
-        }
-        case 8: {
-            cout << "Delete at end" << endl;
-            DeleteNodeAtEnd(&head);
-            break;
-        }
-        case 9: {
-            cout << "Search first occurrence \nEnter Value: ";
-            int key;
-            cin >> key;
-            int pos = Searchfirstoccurrence(head, key);
-            if (pos == -1)
-                cout << "found: false" << endl;
-            else
-                cout << "found: true at index " << pos << endl;
-            break;
-        }
-        case 10: {
-            cout << "Original List: ";
-            DisplayDoublyLinkedList(head);
-            reverseList(head);
-            cout << "Reversed List: ";
-            DisplayDoublyLinkedList(head);
-            break;
-        }
-        default:
-            cout << "Invalid Choice" << endl;
     }
 
     return 0;
