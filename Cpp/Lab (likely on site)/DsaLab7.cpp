@@ -186,10 +186,12 @@ int main() {
     cout << "2. Display Doubly Linked List" << endl;
     cout << "3. Insert Node at Position" << endl;
     cout << "4. Delete Node at Position" << endl;
-    cout << "5. Insert at end" << endl;
-    cout << "6. Delete at end" << endl;
-    cout << "7. Search first occurrence" << endl;
-    cout << "8. Reverse List" << endl;
+    cout << "5. Insert at start" << endl;
+    cout << "6. Insert at end" << endl;
+    cout << "7. Delete at start" << endl;
+    cout << "8. Delete at end" << endl;
+    cout << "9. Search first occurrence" << endl;
+    cout << "10. Reverse List" << endl;
 
     cout << "Enter your choice: ";
     cin >> choice;
@@ -225,18 +227,31 @@ int main() {
             break;
         }
         case 5: {
+            cout << "Insert Node at Start" << endl;
+            cout << "Enter Value: ";
+            int val;
+            cin >> val;
+            InsertAtPosition(&head, 1, val);
+            break;
+        }
+        case 6: {
             cout << "Insert at end\nEnter Value: ";
             int val;
             cin >> val;
             InsertAtend(&head, val);
             break;
         }
-        case 6: {
+        case 7: {
+            cout << "Delete Node at start" << endl;
+            DeleteNodeAtPosition(&head, 1);
+            break;
+        }
+        case 8: {
             cout << "Delete at end" << endl;
             DeleteNodeAtEnd(&head);
             break;
         }
-        case 7: {
+        case 9: {
             cout << "Search first occurrence \nEnter Value: ";
             int key;
             cin >> key;
@@ -247,7 +262,7 @@ int main() {
                 cout << "found: true at index " << pos << endl;
             break;
         }
-        case 8: {
+        case 10: {
             cout << "Original List: ";
             DisplayDoublyLinkedList(head);
             reverseList(head);
