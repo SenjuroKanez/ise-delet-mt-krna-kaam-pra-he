@@ -7,7 +7,8 @@ int top = -1;
 
 #include <iostream>
 using namespace std;
-
+int m();
+int ain();
 
 class Node {
 public:
@@ -209,42 +210,36 @@ display();
 // --- Stack Implementation using an Array ---
 
 // Global stack array and 'top' pointer
-int stack[MAX_SIZE];
-int top = -1; // -1 indicates the stack is empty
+int stackArrayDecimal[MAX_SIZE];
+int topIndexArray = -1; // -1 indicates the stack is empty
 
-bool isFull() {
-    return top == MAX_SIZE - 1;
+bool isFullArray() {
+    return topIndexArray == MAX_SIZE - 1;
 }
 
-/**
- * @brief Checks if the stack is empty.
- * @return true if the stack is empty, false otherwise.
- */
-bool isEmpty() {
-    return top == -1;
+
+bool isEmptyArray() {
+    return topIndexArray == -1;
 }
 
-/**
- * @brief Pushes an item onto the top of the stack.
- * @param item The integer item to push.
- */
-void push(int item) {
-    if (isFull()) {
+
+void pushArray(int item) {
+    if (isFullArray()) {
         std::cout << "Stack Overflow! Cannot push item." << std::endl;
         return;
     }
     // Increment top, then add the item to that position
-    stack[++top] = item;
+    stackArrayDecimal[++topIndexArray] = item;
 }
 
 
-int poP() {
-    if (isEmpty()) {
+int popArray() {
+    if (isEmptyArray()) {
         std::cout << "Stack Underflow! Cannot pop item." << std::endl;
         return -1; // Return a sentinel value indicating error
     }
     // Return the item at the top, then decrement top
-    return stack[top--];
+    return stackArrayDecimal[topIndexArray--];
 }
 
 
@@ -263,7 +258,7 @@ void convertDecimalToBinary(int decimalNum) {
         int remainder = decimalNum % 2;
         
         // Push the remainder onto the stack
-        push(remainder);
+        pushArray(remainder);
         
         // Update the decimal number by dividing by 2
         decimalNum = decimalNum / 2;
@@ -272,10 +267,10 @@ void convertDecimalToBinary(int decimalNum) {
     // 2. Pop remainders from the stack to get the binary number
     std::cout << "Decimal number: " << originalNum << std::endl;
     std::cout << "Binary equivalent: ";
-    while (!isEmpty()) {
+    while (!isEmptyArray()) {
         // Pop the top item (which was the last remainder pushed)
         // and print it.
-        std::cout << poP();
+        std::cout << popArray();
     }
     std::cout << std::endl;
 }
@@ -303,48 +298,46 @@ int m() {
 
 
 
-using namespace std;
+// Custom stack implementation using array for palindrome check
+const int CHAR_STACK_SIZE = 100;
+char charStack[CHAR_STACK_SIZE];
+int charTopIndex = -1;
 
-// Custom stack implementation using array
-const int MAzX_SIZE = 100;
-char stackArray[MAzX_SIZE];
-int topIndex = -1;
-
-// Function to check if stack is empty
-bool isEmpty() {
-    return topIndex == -1;
+// Function to check if char stack is empty
+bool isCharStackEmpty() {
+    return charTopIndex == -1;
 }
 
-// Function to check if stack is full
-bool isFull() {
-    return topIndex == MAzX_SIZE - 1;
+// Function to check if char stack is full
+bool isCharStackFullPalindrome() {
+    return charTopIndex == CHAR_STACK_SIZE - 1;
 }
 
 // Push function
-void push(char c) {
-    if (isFull()) {
+void pushChar(char c) {
+    if (isCharStackFullPalindrome()) {
         cout << "Stack overflow!" << endl;
         return;
     }
-    stackArray[++topIndex] = c;
+    charStack[++charTopIndex] = c;
 }
 
 // Pop function
-char Pop() {
-    if (isEmpty()) {
+char popChar() {
+    if (isCharStackEmpty()) {
         cout << "Stack underflow!" << endl;
         return '\0';  // Return null character on underflow
     }
-    return stackArray[topIndex--];
+    return charStack[charTopIndex--];
 }
 
 // Peek function (get top element without popping)
-char Peek() {
-    if (isEmpty()) {
+char peekChar() {
+    if (isCharStackEmpty()) {
         cout << "Stack is empty!" << endl;
         return '\0';
     }
-    return stackArray[topIndex];
+    return charStack[charTopIndex];
 }
 
 int ain() {
@@ -357,17 +350,17 @@ int ain() {
 
     // Push each character onto the stack
     for (int i = 0; i < len; i++) {
-        push(str[i]);
+        pushChar(str[i]);
     }
 
     // Check if it's a palindrome by comparing original string with popped characters
     bool isPalindrome = true;
     for (int i = 0; i < len; i++) {
-        if (str[i] != Peek()) {
+        if (str[i] != peekChar()) {
             isPalindrome = false;
             break;
         }
-        Pop();
+        popChar();
     }
 
     if (isPalindrome) {
