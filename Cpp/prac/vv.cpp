@@ -968,3 +968,533 @@ void RemoveEdge(vector<Edge*>& edges, Edge* edge) {
     }
   }
 }
+
+
+
+
+#include <iostream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+// ======================== BST USING ARRAY ========================
+class BST_Array {
+private:
+    int* tree;
+    int capacity;
+    
+    void inorderHelper(int index) {
+        if (index >= capacity || tree[index] == -1) return;
+        inorderHelper(2 * index + 1);  // Left child
+        cout << tree[index] << " ";
+        inorderHelper(2 * index + 2);  // Right child
+    }
+    
+public:
+    BST_Array(int cap = 100) {
+        capacity = cap;
+        tree = new int[capacity];
+        for (int i = 0; i < capacity; i++) {
+            tree[i] = -1;  // -1 represents empty node
+        }
+    }
+    
+    void insert(int value) {
+        if (tree[0] == -1) {
+            tree[0] = value;
+            return;
+        }
+        
+        int index = 0;
+        while (index < capacity) {
+            if (tree[index] == -1) {
+                tree[index] = value;
+                return;
+            }
+            if (value < tree[index]) {
+                index = 2 * index + 1;  // Go left
+            } else {
+                index = 2 * index + 2;  // Go right
+            }
+        }
+        cout << "Tree is full!" << endl;
+    }
+    
+    bool search(int value) {
+        int index = 0;
+        while (index < capacity && tree[index] != -1) {
+            if (tree[index] == value) return true;
+            if (value < tree[index]) {
+                index = 2 * index + 1;
+            } else {
+                index = 2 * index + 2;
+            }
+        }
+        return false;
+    }
+    
+    void inorder() {
+        inorderHelper(0);
+        cout << endl;
+    }
+    
+    ~BST_Array() {
+        delete[] tree;
+    }
+};
+
+// ======================== BST USING LINKED LIST ========================
+struct BSTNode {
+    int data;
+    BSTNode* left;
+    BSTNode* right;
+    
+    BSTNode(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+class BST_LinkedList {
+private:
+    BSTNode* root;
+    
+    BSTNode* insertHelper(BSTNode* node, int value) {
+        if (node == nullptr) {
+            return new BSTNode(value);
+        }
+        if (value < node->data) {
+            node->left = insertHelper(node->left, value);
+        } else if (value > node->data) {
+            node->right = insertHelper(node->right, value);
+        }
+        return node;
+    }
+    
+    bool searchHelper(BSTNode* node, int value) {
+        if (node == nullptr) return false;
+        if (node->data == value) return true;
+        if (value < node->data) {
+            return searchHelper(node->left, value);
+        }
+        return searchHelper(node->right, value);
+    }
+    
+    void inorderHelper(BSTNode* node) {
+        if (node == nullptr) return;
+        inorderHelper(node->left);
+        cout << node->data << " ";
+        inorderHelper(node->right);
+    }
+    
+    BSTNode* findMin(BSTNode* node) {
+        while (node->left != nullptr) {
+            node = node->left;
+        }
+        return node;
+    }
+    
+    BSTNode* deleteHelper(BSTNode* node, int value) {
+        if (node == nullptr) return nullptr;
+        
+        if (value < node->data) {
+            node->left = deleteHelper(node->left, value);
+        } else if (value > node->data) {
+            node->right = deleteHelper(node->right, value);
+        } else {
+            // Node found
+            if (node->left == nullptr) {
+                BSTNode* temp = node->right;
+                delete node;
+                return temp;
+            } else if (node->right == nullptr) {
+                BSTNode* temp = node->left;
+                delete node;
+                return temp;
+            }
+            
+            // Node has two children
+            BSTNode* temp = findMin(node->right);
+            node->data = temp->data;
+            node->right = deleteHelper(node->right, temp->data);
+        }
+        return node;
+    }
+    
+    void destroyTree(BSTNode* node) {
+        if (node != nullptr) {
+            destroyTree(node->left);
+            destroyTree(node->right);
+            delete node;
+        }
+    }
+    
+public:
+    BST_LinkedList() : root(nullptr) {}
+    
+    void insert(int value) {
+        root = insertHelper(root, value);
+    }
+    
+    bool search(int value) {
+        return searchHelper(root, value);
+    }
+    
+    void remove(int value) {
+        root = deleteHelper(root, value);
+    }
+    
+    void inorder() {
+        inorderHelper(root);
+        cout << endl;
+    }
+    
+    ~BST_LinkedList() {
+        destroyTree(root);
+    }
+};
+
+// ======================== AVL TREE USING ARRAY ========================
+class AVL_Array {
+private:
+    int* tree;
+    int* height;
+    int capacity;
+    
+    int getHeight(int index) {
+        if (index >= capacity || tree[index] == -1) return 0;
+        return height[index];
+    }
+    
+    int getBalance(int index) {
+        if (index >= capacity || tree[index] == -1) return 0;
+        return getHeight(2 * index + 1) - getHeight(2 * index + 2);
+    }
+    
+    void updateHeight(int index) {
+        if (index >= capacity || tree[index] == -1) return;
+        height[index] = 1 + max(getHeight(2 * index + 1), getHeight(2 * index + 2));
+    }
+    
+    void inorderHelper(int index) {
+        if (index >= capacity || tree[index] == -1) return;
+        inorderHelper(2 * index + 1);
+        cout << tree[index] << " ";
+        inorderHelper(2 * index + 2);
+    }
+    
+public:
+    AVL_Array(int cap = 100) {
+        capacity = cap;
+        tree = new int[capacity];
+        height = new int[capacity];
+        for (int i = 0; i < capacity; i++) {
+            tree[i] = -1;
+            height[i] = 0;
+        }
+    }
+    
+    void insert(int value) {
+        if (tree[0] == -1) {
+            tree[0] = value;
+            height[0] = 1;
+            return;
+        }
+        
+        int index = 0;
+        while (index < capacity) {
+            if (tree[index] == -1) {
+                tree[index] = value;
+                height[index] = 1;
+                return;
+            }
+            if (value < tree[index]) {
+                index = 2 * index + 1;
+            } else {
+                index = 2 * index + 2;
+            }
+        }
+    }
+    
+    void inorder() {
+        inorderHelper(0);
+        cout << endl;
+    }
+    
+    ~AVL_Array() {
+        delete[] tree;
+        delete[] height;
+    }
+};
+
+// ======================== AVL TREE USING LINKED LIST ========================
+struct AVLNode {
+    int data;
+    AVLNode* left;
+    AVLNode* right;
+    int height;
+    
+    AVLNode(int val) : data(val), left(nullptr), right(nullptr), height(1) {}
+};
+
+class AVL_LinkedList {
+private:
+    AVLNode* root;
+    
+    int getHeight(AVLNode* node) {
+        return node ? node->height : 0;
+    }
+    
+    int getBalance(AVLNode* node) {
+        return node ? getHeight(node->left) - getHeight(node->right) : 0;
+    }
+    
+    void updateHeight(AVLNode* node) {
+        if (node) {
+            node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+        }
+    }
+    
+    AVLNode* rightRotate(AVLNode* y) {
+        AVLNode* x = y->left;
+        AVLNode* T2 = x->right;
+        
+        x->right = y;
+        y->left = T2;
+        
+        updateHeight(y);
+        updateHeight(x);
+        
+        return x;
+    }
+    
+    AVLNode* leftRotate(AVLNode* x) {
+        AVLNode* y = x->right;
+        AVLNode* T2 = y->left;
+        
+        y->left = x;
+        x->right = T2;
+        
+        updateHeight(x);
+        updateHeight(y);
+        
+        return y;
+    }
+    
+    AVLNode* insertHelper(AVLNode* node, int value) {
+        if (node == nullptr) {
+            return new AVLNode(value);
+        }
+        
+        if (value < node->data) {
+            node->left = insertHelper(node->left, value);
+        } else if (value > node->data) {
+            node->right = insertHelper(node->right, value);
+        } else {
+            return node;  // Duplicate values not allowed
+        }
+        
+        updateHeight(node);
+        
+        int balance = getBalance(node);
+        
+        // Left Left Case
+        if (balance > 1 && value < node->left->data) {
+            return rightRotate(node);
+        }
+        
+        // Right Right Case
+        if (balance < -1 && value > node->right->data) {
+            return leftRotate(node);
+        }
+        
+        // Left Right Case
+        if (balance > 1 && value > node->left->data) {
+            node->left = leftRotate(node->left);
+            return rightRotate(node);
+        }
+        
+        // Right Left Case
+        if (balance < -1 && value < node->right->data) {
+            node->right = rightRotate(node->right);
+            return leftRotate(node);
+        }
+        
+        return node;
+    }
+    
+    AVLNode* findMin(AVLNode* node) {
+        while (node->left != nullptr) {
+            node = node->left;
+        }
+        return node;
+    }
+    
+    AVLNode* deleteHelper(AVLNode* node, int value) {
+        if (node == nullptr) return nullptr;
+        
+        if (value < node->data) {
+            node->left = deleteHelper(node->left, value);
+        } else if (value > node->data) {
+            node->right = deleteHelper(node->right, value);
+        } else {
+            if (node->left == nullptr || node->right == nullptr) {
+                AVLNode* temp = node->left ? node->left : node->right;
+                if (temp == nullptr) {
+                    temp = node;
+                    node = nullptr;
+                } else {
+                    *node = *temp;
+                }
+                delete temp;
+            } else {
+                AVLNode* temp = findMin(node->right);
+                node->data = temp->data;
+                node->right = deleteHelper(node->right, temp->data);
+            }
+        }
+        
+        if (node == nullptr) return node;
+        
+        updateHeight(node);
+        
+        int balance = getBalance(node);
+        
+        // Left Left Case
+        if (balance > 1 && getBalance(node->left) >= 0) {
+            return rightRotate(node);
+        }
+        
+        // Left Right Case
+        if (balance > 1 && getBalance(node->left) < 0) {
+            node->left = leftRotate(node->left);
+            return rightRotate(node);
+        }
+        
+        // Right Right Case
+        if (balance < -1 && getBalance(node->right) <= 0) {
+            return leftRotate(node);
+        }
+        
+        // Right Left Case
+        if (balance < -1 && getBalance(node->right) > 0) {
+            node->right = rightRotate(node->right);
+            return leftRotate(node);
+        }
+        
+        return node;
+    }
+    
+    void inorderHelper(AVLNode* node) {
+        if (node == nullptr) return;
+        inorderHelper(node->left);
+        cout << node->data << " ";
+        inorderHelper(node->right);
+    }
+    
+    void destroyTree(AVLNode* node) {
+        if (node != nullptr) {
+            destroyTree(node->left);
+            destroyTree(node->right);
+            delete node;
+        }
+    }
+    
+    bool searchHelper(AVLNode* node, int value) {
+        if (node == nullptr) return false;
+        if (node->data == value) return true;
+        if (value < node->data) {
+            return searchHelper(node->left, value);
+        }
+        return searchHelper(node->right, value);
+    }
+    
+public:
+    AVL_LinkedList() : root(nullptr) {}
+    
+    void insert(int value) {
+        root = insertHelper(root, value);
+    }
+    
+    void remove(int value) {
+        root = deleteHelper(root, value);
+    }
+    
+    bool search(int value) {
+        return searchHelper(root, value);
+    }
+    
+    void inorder() {
+        inorderHelper(root);
+        cout << endl;
+    }
+    
+    ~AVL_LinkedList() {
+        destroyTree(root);
+    }
+};
+
+// ======================== MAIN FUNCTION ========================
+int main() {
+    cout << "============ BST USING ARRAY ============" << endl;
+    BST_Array bst_arr;
+    bst_arr.insert(50);
+    bst_arr.insert(30);
+    bst_arr.insert(70);
+    bst_arr.insert(20);
+    bst_arr.insert(40);
+    bst_arr.insert(60);
+    bst_arr.insert(80);
+    
+    cout << "Inorder Traversal: ";
+    bst_arr.inorder();
+    cout << "Search 40: " << (bst_arr.search(40) ? "Found" : "Not Found") << endl;
+    cout << "Search 100: " << (bst_arr.search(100) ? "Found" : "Not Found") << endl;
+    
+    cout << "\n============ BST USING LINKED LIST ============" << endl;
+    BST_LinkedList bst_ll;
+    bst_ll.insert(50);
+    bst_ll.insert(30);
+    bst_ll.insert(70);
+    bst_ll.insert(20);
+    bst_ll.insert(40);
+    bst_ll.insert(60);
+    bst_ll.insert(80);
+    
+    cout << "Inorder Traversal: ";
+    bst_ll.inorder();
+    cout << "Search 60: " << (bst_ll.search(60) ? "Found" : "Not Found") << endl;
+    
+    cout << "Deleting 30..." << endl;
+    bst_ll.remove(30);
+    cout << "Inorder Traversal: ";
+    bst_ll.inorder();
+    
+    cout << "\n============ AVL TREE USING ARRAY ============" << endl;
+    AVL_Array avl_arr;
+    avl_arr.insert(10);
+    avl_arr.insert(20);
+    avl_arr.insert(30);
+    avl_arr.insert(40);
+    avl_arr.insert(50);
+    
+    cout << "Inorder Traversal: ";
+    avl_arr.inorder();
+    
+    cout << "\n============ AVL TREE USING LINKED LIST ============" << endl;
+    AVL_LinkedList avl_ll;
+    avl_ll.insert(10);
+    avl_ll.insert(20);
+    avl_ll.insert(30);
+    avl_ll.insert(40);
+    avl_ll.insert(50);
+    avl_ll.insert(25);
+    
+    cout << "Inorder Traversal: ";
+    avl_ll.inorder();
+    cout << "Search 25: " << (avl_ll.search(25) ? "Found" : "Not Found") << endl;
+    
+    cout << "Deleting 40..." << endl;
+    avl_ll.remove(40);
+    cout << "Inorder Traversal: ";
+    avl_ll.inorder();
+    
+    return 0;
+}
