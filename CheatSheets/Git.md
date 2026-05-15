@@ -165,7 +165,15 @@ These are the commands you'll use 90% of the time.
   * Shows all stashes.
 
 ---
+## ✍️ The Github CLI
 
+These are the commands are for github.
+
+* `gh create repo name`
+
+  * Creates a reposotory on github.
+ 
+---
 ### ⭐ Pro-Tip for Learners
 
 `git <command-name> --help` → Official documentation for any command.
