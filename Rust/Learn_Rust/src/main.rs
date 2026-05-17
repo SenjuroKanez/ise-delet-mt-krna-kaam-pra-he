@@ -1,3 +1,5 @@
+mod exam1_pf;
+mod mian;
 fn main() {
     println!("Hello, world!");
     let c = 44;
@@ -14,4 +16,6 @@ fn main() {
     println!("spaces are {spaces}");
     let c = 3;
     println!("{c}");
+    mian::varlen();
+    exam1_pf::moin();
 }
