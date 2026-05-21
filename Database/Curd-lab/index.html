@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Firestore CRUD</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    li { cursor: pointer; padding: 5px; border-bottom: 1px solid #eee; }
+    li:hover { background: #f9f9f9; color: red; }
+    small { color: #888; display: block; }
+  </style>
+</head>
+<body>
+
+  <h2>Task Manager</h2>
+  <p><small>Tip: Click a task to delete it.</small></p>
+  
+  <input type="text" id="taskInput" placeholder="Enter task">
+  <button onclick="addTask()">Add Task</button>
+
+  <ul id="taskList"></ul>
+
+  <script type="module">
+    // 1. Import Firebase libraries (Fixed URLs)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+    // 2. Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAEIGMebWEYywWw3ILqbhOJ6fij43MKg4g",
+      authDomain: "webapp-a4add.firebaseapp.com",
+      projectId: "webapp-a4add",
+      storageBucket: "webapp-a4add.firebasestorage.app",
+      messagingSenderId: "1006761453011",
+      appId: "1:1006761453011:web:6f1437dda072e86071e846",
+      measurementId: "G-RX52D8YHHM"
+    };
+
+    // 3. Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 4. Add Task (Attached to window for global access)
+    window.addTask = async function () {
+      const taskInput = document.getElementById("taskInput");
+      const name = taskInput.value.trim();
+      
+      if (name !== "") {
+        try {
+          await addDoc(collection(db, "tasks"), { name: name });
+          taskInput.value = "";
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      }
+    };
+
+    // 5. Delete Task (Attached to window for global access)
+    window.deleteTask = async function (id) {
+      try {
+        await deleteDoc(doc(db, "tasks", id));
+      } catch (e) {
+        console.error("Error deleting document: ", e);
+      }
+    };
+
+    // 6. Read Tasks (Real-time listener)
+    const taskListUI = document.getElementById("taskList");
+    onSnapshot(collection(db, "tasks"), (snapshot) => {
+      taskListUI.innerHTML = "";
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const li = document.createElement("li");
+        li.textContent = data.name;
+        // Call the globally scoped deleteTask
+        li.onclick = () => window.deleteTask(docSnap.id);
+        taskListUI.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
