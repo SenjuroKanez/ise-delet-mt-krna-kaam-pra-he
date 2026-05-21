@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A* Heuristic Search Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .graph-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .controls h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .algorithm-select {
+            margin-bottom: 20px;
+        }
+
+        .algorithm-select label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        select:hover {
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .info-panel {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .info-panel h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .info-value {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .legend {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .legend h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid #333;
+        }
+
+        .legend-text {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .step-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .step-info strong {
+            color: #856404;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 A* Heuristic Search Visualization</h1>
+            <p>HITEC University - Artificial Intelligence Lab</p>
+        </div>
+
+        <div class="legend">
+            <h2>Legend</h2>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4ade80;"></div>
+                    <span class="legend-text">Start Node</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f87171;"></div>
+                    <span class="legend-text">Goal Node</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fbbf24;"></div>
+                    <span class="legend-text">Current Node</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #60a5fa;"></div>
+                    <span class="legend-text">Visited Node</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e5e7eb;"></div>
+                    <span class="legend-text">Unvisited Node</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #a78bfa; border-color: #7c3aed; border-width: 5px;"></div>
+                    <span class="legend-text">Path Node</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="graph-container">
+                <canvas id="graphCanvas" width="800" height="600"></canvas>
+            </div>
+
+            <div class="controls">
+                <h2>Controls</h2>
+                
+                <div class="algorithm-select">
+                    <label for="algorithmSelect">Select Algorithm:</label>
+                    <select id="algorithmSelect">
+                        <option value="astar">A* Search (Optimal)</option>
+                        <option value="greedy">Greedy Best-First</option>
+                        <option value="ucs">Uniform Cost Search</option>
+                    </select>
+                </div>
+
+                <button id="startBtn">▶ Start Search</button>
+                <button id="stepBtn" disabled>⏭ Next Step</button>
+                <button id="resetBtn">🔄 Reset</button>
+
+                <div class="info-panel">
+                    <h3>Algorithm Info</h3>
+                    <div class="info-item">
+                        <span class="info-label">Current Step:</span>
+                        <span class="info-value" id="stepCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Current Node:</span>
+                        <span class="info-value" id="currentNode">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">g(n) Cost:</span>
+                        <span class="info-value" id="gCost">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">h(n) Heuristic:</span>
+                        <span class="info-value" id="hCost">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">f(n) Total:</span>
+                        <span class="info-value" id="fCost">-</span>
+                    </div>
+                </div>
+
+                <div class="step-info" id="stepInfo" style="display: none;">
+                    <strong>Status:</strong> <span id="statusText"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Graph data - Fixed with proper edge costs
+        const graph = {
+            'Src': [['1', 2], ['2', 3], ['3', 1]],
+            '1': [['4', 4], ['5', 3]],
+            '2': [['6', 2]],
+            '3': [['7', 2], ['8', 4]],
+            '4': [],
+            '5': [],
+            '6': [],
+            '7': [['Dest', 3]],
+            '8': [],
+            'Dest': []
+        };
+
+        const heuristic = {
+            'Src': 20,
+            '1': 22,
+            '2': 21,
+            '3': 10,
+            '4': 25,
+            '5': 24,
+            '6': 30,
+            '7': 5,
+            '8': 12,
+            'Dest': 0
+        };
+
+        // Node positions for visualization - Fixed positions
+        const nodePositions = {
+            'Src': {x: 100, y: 300},
+            '1': {x: 250, y: 100},
+            '2': {x: 250, y: 300},
+            '3': {x: 250, y: 500},
+            '4': {x: 400, y: 50},
+            '5': {x: 400, y: 150},
+            '6': {x: 400, y: 300},
+            '7': {x: 400, y: 450},
+            '8': {x: 400, y: 550},
+            'Dest': {x: 600, y: 450}
+        };
+
+        let searchState = {
+            algorithm: 'astar',
+            openSet: [],
+            visited: new Set(),
+            currentNode: null,
+            step: 0,
+            path: [],
+            finalPath: null,
+            isComplete: false
+        };
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw edges first
+            for (let node in graph) {
+                const from = nodePositions[node];
+                if (!from) continue;
+                
+                graph[node].forEach(([neighbor, cost]) => {
+                    const to = nodePositions[neighbor];
+                    if (!to) return;
+                    
+                    // Check if edge is part of final path
+                    let isPathEdge = false;
+                    if (searchState.finalPath) {
+                        const pathIndex = searchState.finalPath.indexOf(node);
+                        if (pathIndex !== -1 && searchState.finalPath[pathIndex + 1] === neighbor) {
+                            isPathEdge = true;
+                        }
+                    }
+
+                    // Draw edge
+                    ctx.beginPath();
+                    ctx.moveTo(from.x, from.y);
+                    ctx.lineTo(to.x, to.y);
+                    ctx.strokeStyle = isPathEdge ? '#7c3aed' : '#94a3b8';
+                    ctx.lineWidth = isPathEdge ? 4 : 2;
+                    ctx.stroke();
+
+                    // Draw arrow
+                    const angle = Math.atan2(to.y - from.y, to.x - from.x);
+                    const arrowX = to.x - 40 * Math.cos(angle);
+                    const arrowY = to.y - 40 * Math.sin(angle);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(arrowX, arrowY);
+                    ctx.lineTo(arrowX - 10 * Math.cos(angle - Math.PI / 6), arrowY - 10 * Math.sin(angle - Math.PI / 6));
+                    ctx.lineTo(arrowX - 10 * Math.cos(angle + Math.PI / 6), arrowY - 10 * Math.sin(angle + Math.PI / 6));
+                    ctx.closePath();
+                    ctx.fillStyle = isPathEdge ? '#7c3aed' : '#94a3b8';
+                    ctx.fill();
+
+                    // Draw cost label
+                    const midX = (from.x + to.x) / 2;
+                    const midY = (from.y + to.y) / 2;
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(midX - 15, midY - 12, 30, 24);
+                    ctx.fillStyle = isPathEdge ? '#7c3aed' : '#64748b';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(cost, midX, midY);
+                });
+            }
+
+            // Draw nodes
+            for (let node in nodePositions) {
+                const pos = nodePositions[node];
+                let color = '#e5e7eb'; // default unvisited
+
+                if (node === 'Src') color = '#4ade80'; // start
+                else if (node === 'Dest') color = '#f87171'; // goal
+                else if (searchState.finalPath && searchState.finalPath.includes(node)) color = '#a78bfa'; // path
+                else if (searchState.currentNode === node) color = '#fbbf24'; // current
+                else if (searchState.visited.has(node)) color = '#60a5fa'; // visited
+
+                // Draw node circle
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 35, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#1e293b';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Draw node label
+                ctx.fillStyle = '#1e293b';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node, pos.x, pos.y);
+
+                // Draw heuristic value
+                ctx.fillStyle = '#64748b';
+                ctx.font = '11px Arial';
+                ctx.fillText(`h=${heuristic[node]}`, pos.x, pos.y + 50);
+            }
+        }
+
+        function initializeSearch() {
+            const algo = searchState.algorithm;
+            searchState.openSet = [];
+            searchState.visited = new Set();
+            searchState.step = 0;
+            searchState.currentNode = null;
+            searchState.finalPath = null;
+            searchState.isComplete = false;
+
+            if (algo === 'astar') {
+                searchState.openSet.push({
+                    f: heuristic['Src'],
+                    node: 'Src',
+                    path: ['Src'],
+                    g: 0
+                });
+            } else if (algo === 'greedy') {
+                searchState.openSet.push({
+                    h: heuristic['Src'],
+                    node: 'Src',
+                    path: ['Src'],
+                    g: 0
+                });
+            } else if (algo === 'ucs') {
+                searchState.openSet.push({
+                    g: 0,
+                    node: 'Src',
+                    path: ['Src']
+                });
+            }
+
+            searchState.openSet.sort((a, b) => {
+                if (algo === 'astar') return a.f - b.f;
+                if (algo === 'greedy') return a.h - b.h;
+                return a.g - b.g;
+            });
+        }
+
+        function stepSearch() {
+            if (searchState.openSet.length === 0 || searchState.isComplete) {
+                document.getElementById('stepInfo').style.display = 'block';
+                document.getElementById('statusText').textContent = 'Search complete!';
+                document.getElementById('stepBtn').disabled = true;
+                return;
+            }
+
+            const current = searchState.openSet.shift();
+            searchState.currentNode = current.node;
+            searchState.step++;
+
+            // Update UI
+            document.getElementById('stepCount').textContent = searchState.step;
+            document.getElementById('currentNode').textContent = current.node;
+            document.getElementById('gCost').textContent = current.g || 0;
+            document.getElementById('hCost').textContent = heuristic[current.node];
+            document.getElementById('fCost').textContent = searchState.algorithm === 'astar' ? current.f : '-';
+
+            if (current.node === 'Dest') {
+                searchState.finalPath = current.path;
+                searchState.isComplete = true;
+                document.getElementById('stepInfo').style.display = 'block';
+                document.getElementById('statusText').textContent = 
+                    `Goal found! Path: ${current.path.join(' → ')} | Cost: ${current.g}`;
+                drawGraph();
+                return;
+            }
+
+            if (searchState.visited.has(current.node)) {
+                drawGraph();
+                return;
+            }
+
+            searchState.visited.add(current.node);
+
+            // Explore neighbors
+            graph[current.node].forEach(([neighbor, cost]) => {
+                if (!searchState.visited.has(neighbor)) {
+                    const newG = current.g + cost;
+                    const newPath = [...current.path, neighbor];
+
+                    if (searchState.algorithm === 'astar') {
+                        searchState.openSet.push({
+                            f: newG + heuristic[neighbor],
+                            node: neighbor,
+                            path: newPath,
+                            g: newG
+                        });
+                        searchState.openSet.sort((a, b) => a.f - b.f);
+                    } else if (searchState.algorithm === 'greedy') {
+                        searchState.openSet.push({
+                            h: heuristic[neighbor],
+                            node: neighbor,
+                            path: newPath,
+                            g: newG
+                        });
+                        searchState.openSet.sort((a, b) => a.h - b.h);
+                    } else {
+                        searchState.openSet.push({
+                            g: newG,
+                            node: neighbor,
+                            path: newPath
+                        });
+                        searchState.openSet.sort((a, b) => a.g - b.g);
+                    }
+                }
+            });
+
+            drawGraph();
+        }
+
+        // Event listeners
+        document.getElementById('startBtn').addEventListener('click', () => {
+            searchState.algorithm = document.getElementById('algorithmSelect').value;
+            initializeSearch();
+            drawGraph();
+            document.getElementById('stepBtn').disabled = false;
+            document.getElementById('stepInfo').style.display = 'none';
+        });
+
+        document.getElementById('stepBtn').addEventListener('click', stepSearch);
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            searchState = {
+                algorithm: 'astar',
+                openSet: [],
+                visited: new Set(),
+                currentNode: null,
+                step: 0,
+                path: [],
+                finalPath: null,
+                isComplete: false
+            };
+            document.getElementById('stepCount').textContent = '0';
+            document.getElementById('currentNode').textContent = '-';
+            document.getElementById('gCost').textContent = '-';
+            document.getElementById('hCost').textContent = '-';
+            document.getElementById('fCost').textContent = '-';
+            document.getElementById('stepInfo').style.display = 'none';
+            document.getElementById('stepBtn').disabled = true;
+            drawGraph();
+        });
+
+        // Initial draw
+        drawGraph();
+    </script>
+</body>
+</html>

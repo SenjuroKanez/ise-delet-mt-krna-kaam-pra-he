@@ -9,16 +9,42 @@ This file lists the most common Git commands, organized by their function.
 These commands are for setting up Git for the first time or starting a new project.
 
 * `git config --global user.name "Your Name"`
-    * Sets the name that will be attached to your commits. This is a **one-time setup** on any new machine.
+
+  * Sets the name that will be attached to your commits. This is a **one-time setup** on any new machine.
 
 * `git config --global user.email "youremail@example.com"`
-    * Sets the email that will be attached to your commits. Also a **one-time setup**.
+
+  * Sets the email that will be attached to your commits. Also a **one-time setup**.
 
 * `git init`
-    * Initializes (creates) a new, empty Git repository in your current folder. This is the first step to creating a new project.
+
+  * Initializes (creates) a new, empty Git repository in your current folder. This is the first step to creating a new project.
 
 * `git clone <url>`
-    * Downloads a copy (a "clone") of an existing repository from a remote URL (like GitHub) to your local machine.
+
+  * Downloads a copy (a "clone") of an existing repository from a remote URL (like GitHub) to your local machine.
+
+---
+
+## 🔐 SSH Key Setup (for GitHub, GitLab, etc.)
+
+These commands let you connect to GitHub without typing your password every time.
+
+* `ssh-keygen -t ed25519 -C "your@email.com"`
+
+  * Generates a new SSH key for secure authentication.
+
+* `eval "$(ssh-agent -s)"`
+
+  * Starts the SSH authentication agent.
+
+* `ssh-add ~/.ssh/id_ed25519`
+
+  * Adds your private key to the SSH agent.
+
+* `cat ~/.ssh/id_ed25519.pub`
+
+  * Displays your public key — copy this into GitHub → Settings → SSH & GPG Keys.
 
 ---
 
@@ -27,112 +53,127 @@ These commands are for setting up Git for the first time or starting a new proje
 These are the commands you'll use 90% of the time.
 
 * `git status`
-    * Shows the current status of your repository. It tells you which files are new, modified, or "staged" (ready to be saved). This is your most-used command.
+
+  * Shows the current status of your repository.
 
 * `git add <file-name>`
-    * Adds a specific file to the "staging area." Think of the staging area as a "shopping cart" for your next commit (save).
+
+  * Adds a specific file to the staging area.
 
 * `git add .`
-    * A shortcut to add **all** new and modified files in the current folder (and subfolders) to the staging area.
+
+  * Adds **all** new/modified files to staging.
 
 * `git commit -m "Your descriptive message"`
-    * Takes all the files from the staging area and saves a permanent "snapshot" (a commit) of them in your project's history. The message describes *what you changed*.
+
+  * Saves your staged changes as a commit.
 
 * `git log`
-    * Shows a list of all the commits you've made, starting with the most recent. This is your project's history.
-    * (Press `q` to quit the log view).
+
+  * Shows your commit history. Press `q` to exit.
 
 ---
 
 ## ☁️ Working with Remotes (like GitHub)
 
-These commands are for syncing your local project with a remote server (e.g., GitHub, GitLab).
-
 * `git remote -v`
-    * Lists all the remote connections (URLs) your local repository knows about. (`-v` stands for "verbose" and shows the URLs).
+
+  * Lists your remotes and their URLs.
 
 * `git remote add <name> <url>`
-    * Adds a new remote connection. By convention, the main remote is usually named `origin`.
-    * Example: `git remote add origin https://github.com/user/repo.git`
+
+  * Adds a new remote.
 
 * `git fetch <remote-name>`
-    * Downloads all the changes (new branches, new commits) from the remote repository but **does not** merge them into your local branches. This is a safe way to see what's new.
+
+  * Downloads changes without merging.
 
 * `git pull <remote-name> <branch-name>`
-    * Downloads changes from the remote **and** automatically tries to merge them into your current branch. This is a combination of `git fetch` and `git merge`.
-    * Example: `git pull origin main`
+
+  * Fetches + merges changes.
 
 * `git push <remote-name> <branch-name>`
-    * Uploads (pushes) all your local commits from your specified branch to the remote repository, sharing your changes with others.
-    * Example: `git push origin main`
+
+  * Uploads your commits.
 
 ---
 
 ## 🌿 Branching & Merging
 
-Branches let you work on new features or bug fixes in isolation without affecting the main codebase.
-
 * `git branch`
-    * Lists all the branches in your local repository. The one with a `*` next to it is your currently active branch.
+
+  * Lists local branches.
 
 * `git branch <new-branch-name>`
-    * Creates a new branch with the given name, based on your current commit.
+
+  * Creates a new branch.
 
 * `git switch <branch-name>`
-    * Switches your "workspace" to the specified branch. (This is the modern command; you may also see the older `git checkout <branch-name>`).
+
+  * Switches to another branch.
 
 * `git switch -c <new-branch-name>`
-    * A shortcut that **c**reates a new branch *and* switches to it in one step.
+
+  * Creates + switches to a new branch.
 
 * `git merge <branch-name>`
-    * Combines the history of the specified branch into your *current* branch. This is how you integrate a new feature back into the `main` branch.
+
+  * Merges the given branch into your current one.
 
 * `git branch -d <branch-name>`
-    * Deletes the specified local branch. (You can't delete the branch you are currently on).
+
+  * Deletes a local branch.
 
 ---
 
 ## ↩️ Undoing Changes
 
-These commands help you fix mistakes. **Be careful with commands like `reset`!**
-
 * `git restore <file-name>`
-    * Discards all changes you've made to a file in your *working directory* (the files you see in your folder), restoring it to how it looked at the last commit.
+
+  * Discards changes in the working directory.
 
 * `git restore --staged <file-name>`
-    * Removes a file from the "staging area" (un-adds it) but keeps the changes in your working directory. Use this if you `git add` a file by accident.
+
+  * Unstages a previously added file.
 
 * `git revert <commit-hash>`
-    * "Undoes" a past commit by creating a **new commit** that does the opposite. This is the *safest* way to undo a change that has already been shared with others.
+
+  * Safely undoes a commit by creating a new opposite commit.
 
 * `git reset <commit-hash>`
-    * **WARNING: Advanced!** Moves your current branch back to a previous commit.
-    * `--soft`: Keeps all your changes.
-    * `--mixed` (default): Keeps your changes but unstages them.
-    * `--hard`: **DANGER!** Discards all changes since that commit.
+
+  * Moves your branch pointer back.
 
 * `git clean -fd`
-    * **DANGER!** Deletes all *untracked* files and directories from your project folder. This is useful for cleaning up build files, but it's permanent.
+
+  * Deletes all untracked files.
 
 ---
 
 ## 🗂️ Stashing Changes
 
-Use this when you need to quickly switch branches but aren't ready to commit your current work.
-
 * `git stash`
-    * Temporarily saves all your uncommitted (staged and unstaged) changes and cleans your working directory.
+
+  * Temporarily saves uncommitted work.
 
 * `git stash pop`
-    * Re-applies the most recent set of stashed changes and removes them from your stash list.
+
+  * Restores stashed changes.
 
 * `git stash list`
-    * Shows all the stashed "snapshots" you have saved.
+
+  * Shows all stashes.
 
 ---
+## ✍️ The Github CLI
 
+These are the commands are for github.
+
+* `gh create repo name`
+
+  * Creates a reposotory on github.
+ 
+---
 ### ⭐ Pro-Tip for Learners
 
-For *any* command, you can get the full official documentation by typing:
-`git <command-name> --help`
-(e.g., `git merge --help`)
+`git <command-name> --help` → Official documentation for any command.
