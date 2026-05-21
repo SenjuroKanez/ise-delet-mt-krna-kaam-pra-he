@@ -2,6 +2,59 @@
 #include <vector>
 using namespace std;
 
+int main(){
+    Q1();
+    Q2();
+    Q3();
+    Q4();
+}
+int Q1() {
+    int n = 7; 
+    int index = 0;
+    int arr[n] = {2, 3, 5, 7, 11, 13,0}; 
+
+    int newValue = 99; 
+
+
+    for (int i = n; i > index; i--) {
+        arr[i] = arr[i - 1];
+
+    }
+    arr[index] = newValue;
+ 
+
+
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+int Q2() {
+    int n = 10; 
+    int index = 4;
+    int arr[n] = {2, 3, 5, 7, 11, 13}; 
+
+    int newValue = 99; 
+
+
+    for (int i = n; i > index; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[index] = newValue;
+    n++;
+
+
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
 // Binary search on a sorted vector
 int binarySearch(const vector<int>& arr, int key) {
 	int low = 0;
@@ -29,7 +82,7 @@ int linearSearch(const vector<int>& arr, int key) {
 	return -1; // Return -1 if element not found
 }
 
-int main() {
+int Q4() {
 	int n, key;
 	// Input array size
 	cout << "Enter the size of array: ";
@@ -76,4 +129,27 @@ int main() {
 		cout << "Element not found in the array." << endl;
 
 	return 0;
+}
+
+int Q3() {
+    int n = 7; 
+    int index = 0;
+    int arr[n] = {2, 3, 5, 7, 11, 13}; 
+
+    
+
+
+    for (int i = index; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    
+    n--;
+
+
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
 }
